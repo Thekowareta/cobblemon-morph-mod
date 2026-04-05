@@ -1,38 +1,29 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "cobblemon-morph",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Cobblemon Morph",
+	"description": "Mechanic de morph para Cobblemon inspirada en Pokemon Mundo Misterioso.",
 	"authors": [
-		"Me!"
+		"TuNombre"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/cobblemon-morph/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
-		],
-		"client": [
-			"com.example.ExampleModClient"
+			"com.example.CobblemonMorphMod"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"cobblemon-morph.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.18.5",
-		"minecraft": "~26.1",
-		"java": ">=25",
-		"fabric-api": "*"
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cobblemon": ">=1.7.3"
 	}
 }
