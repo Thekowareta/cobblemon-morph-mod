@@ -11,6 +11,7 @@ public class CobblemonMorphMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Cobblemon Morph cargado correctamente!");
+		MorphNetwork.register();
 		MorphCommand.register();
 		BattleHandler.register();
 	}

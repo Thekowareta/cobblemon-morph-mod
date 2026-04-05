@@ -47,6 +47,7 @@ public class BattleHandler {
 
                     player.setInvisible(true);
                     PokemonRenderer.setMorph(player, rolePokemon);
+                    MorphNetwork.sendMorphUpdate(player, rolePokemon.getSpecies().getName());
                     player.sendMessage(Text.literal("§7Entraste a combate — eres invisible."));
                 }
             }
@@ -60,6 +61,7 @@ public class BattleHandler {
                 if (player != null) {
                     player.setInvisible(false);
                     PokemonRenderer.clearMorph(player);
+                    MorphNetwork.sendMorphUpdate(player, "");
                     player.sendMessage(Text.literal("§aCombate terminado — eres visible."));
                 }
             }

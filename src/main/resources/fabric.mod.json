@@ -17,7 +17,11 @@
 		]
 	},
 	"mixins": [
-		"cobblemon-morph.mixins.json"
+		"cobblemon-morph.mixins.json",
+		{
+			"config": "cobblemon-morph.client.mixins.json",
+			"environment": "client"
+		}
 	],
 	"depends": {
 		"fabricloader": ">=0.16.5",
@@ -25,5 +29,13 @@
 		"java": ">=21",
 		"fabric-api": "*",
 		"cobblemon": ">=1.7.3"
+	},
+	"entrypoints": {
+		"main": [
+			"com.example.CobblemonMorphMod"
+		],
+		"client": [
+			"com.example.client.MorphClient"
+		]
 	}
 }
