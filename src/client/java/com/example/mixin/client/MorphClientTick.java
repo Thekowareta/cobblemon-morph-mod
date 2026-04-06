@@ -1,5 +1,7 @@
 package com.example.client;
 
+import com.cobblemon.mod.common.client.entity.PokemonClientDelegate;
+
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -14,18 +16,26 @@ public class MorphClientTick {
             PokemonEntity entity = MorphClient.getActivePokemonEntity(player.getUuid());
             if (entity == null) return;
 
-            // ✅ orden correcto
-            entity.setVelocity(player.getVelocity());
-            entity.tick(); // primero tickear
+            float speed = (float) player.getVelocity().horizontalLength();
+            boolean isMoving = speed > 0.01f;
 
-            // luego sincronizar posición encima de lo que hizo el tick
+            entity.setVelocity(player.getVelocity());
+            entity.setOnGround(player.isOnGround());
+            entity.tick();
+
+
+            // Sincronizar posición después del tick
+            double prevX = entity.getX();
+            double prevY = entity.getY();
+            double prevZ = entity.getZ();
+
             entity.setPos(player.getX(), player.getY(), player.getZ());
-            entity.prevX = player.prevX;
-            entity.lastRenderX = player.lastRenderX;
-            entity.prevY = player.prevY;
-            entity.lastRenderY = player.lastRenderY;
-            entity.prevZ = player.prevZ;
-            entity.lastRenderZ = player.lastRenderZ;
+            entity.prevX = prevX;
+            entity.prevY = prevY;
+            entity.prevZ = prevZ;
+            entity.lastRenderX = prevX;
+            entity.lastRenderY = prevY;
+            entity.lastRenderZ = prevZ;
 
             entity.setYaw(player.getYaw());
             entity.setPitch(player.getPitch());
@@ -36,8 +46,6 @@ public class MorphClientTick {
             entity.prevBodyYaw = player.prevBodyYaw;
 
             entity.age++;
-
-
         });
     }
 }
