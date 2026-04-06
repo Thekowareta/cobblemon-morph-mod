@@ -47,6 +47,7 @@ public class MorphClient implements ClientModInitializer {
                     });
                 }
         );
+        MorphClientTick.register();
     }
 
     public static String getMorph(UUID playerUuid) {
