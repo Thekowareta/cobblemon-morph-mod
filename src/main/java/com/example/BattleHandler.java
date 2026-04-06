@@ -13,18 +13,12 @@ import net.minecraft.text.Text;
 public class BattleHandler {
 
     public static void register() {
-
-        // Cuando empieza una batalla
         CobblemonEvents.BATTLE_STARTED_POST.subscribe(event -> {
             handleBattleStart(event.getBattle());
         });
-
-        // Cuando termina una batalla — victoria
         CobblemonEvents.BATTLE_VICTORY.subscribe(event -> {
             handleBattleEnd(event.getBattle());
         });
-
-        // Cuando termina una batalla — huida o rendirse
         CobblemonEvents.BATTLE_FLED.subscribe(event -> {
             handleBattleEnd(event.getBattle());
         });
@@ -35,19 +29,16 @@ public class BattleHandler {
             if (actor instanceof PlayerBattleActor playerActor) {
                 ServerPlayerEntity player = playerActor.getEntity();
                 if (player != null) {
-
-                    // Verificar que tenga Pokémon antes de hacer invisible
+                    PokemonRenderer.setInBattle(player.getUuid()); // ← aquí dentro
                     PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
                     Pokemon rolePokemon = party.get(0);
-
                     if (rolePokemon == null) {
-                        player.sendMessage(Text.literal("§cNecesitas un Pokemon en el slot 1 para el roleplay."));
+                        player.sendMessage(Text.literal("§cNecesitas un Pokemon en el slot 1."));
                         return;
                     }
-
                     player.setInvisible(true);
-                    PokemonRenderer.setMorph(player, rolePokemon);
-                    MorphNetwork.sendMorphUpdate(player, rolePokemon.getSpecies().getName());
+                    PokemonRenderer.clearMorph(player);
+                    MorphNetwork.sendMorphUpdate(player, "");
                     player.sendMessage(Text.literal("§7Entraste a combate — eres invisible."));
                 }
             }
@@ -59,9 +50,14 @@ public class BattleHandler {
             if (actor instanceof PlayerBattleActor playerActor) {
                 ServerPlayerEntity player = playerActor.getEntity();
                 if (player != null) {
+                    PokemonRenderer.clearBattle(player.getUuid()); // ← aquí dentro
                     player.setInvisible(false);
-                    PokemonRenderer.clearMorph(player);
-                    MorphNetwork.sendMorphUpdate(player, "");
+                    Pokemon rolePokemon = Cobblemon.INSTANCE.getStorage().getParty(player).get(0);
+                    if (rolePokemon != null) {
+                        PokemonRenderer.setMorph(player, rolePokemon);
+                        MorphNetwork.sendMorphUpdate(player,
+                                rolePokemon.getSpecies().getName().toLowerCase());
+                    }
                     player.sendMessage(Text.literal("§aCombate terminado — eres visible."));
                 }
             }

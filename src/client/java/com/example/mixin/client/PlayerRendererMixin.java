@@ -1,6 +1,8 @@
 package com.example.mixin.client;
 
 import com.example.client.MorphClient;
+import com.cobblemon.mod.common.client.render.pokemon.PokemonRenderer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -27,8 +29,25 @@ public class PlayerRendererMixin {
             int light,
             CallbackInfo ci
     ) {
-        if (MorphClient.hasMorph(player.getUuid())) {
-            ci.cancel();
-        }
+        // ✅ verificaciones van aquí dentro
+        if (player == null) return;
+        if (!MorphClient.hasMorph(player.getUuid())) return;
+
+        MinecraftClient client = MinecraftClient.getInstance();
+        PokemonRenderer pokemonRenderer = (PokemonRenderer) client
+                .getEntityRenderDispatcher()
+                .getRenderer(MorphClient.getActivePokemonEntity(player.getUuid()));
+
+        if (pokemonRenderer == null) return;
+
+        ci.cancel();
+        pokemonRenderer.render(
+                MorphClient.getActivePokemonEntity(player.getUuid()),
+                yaw,
+                tickDelta,
+                matrices,
+                vertexConsumers,
+                light
+        );
     }
 }
