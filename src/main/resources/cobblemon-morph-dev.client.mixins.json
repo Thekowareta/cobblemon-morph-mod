@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "com.team_aether.morph.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientPlayerDimensionsMixin",
+    "EntityRenderDispatcherMixin",
+    "EntityTickCountAccessor",
+    "LivingEntityAccessor",
+    "LivingEntitySwingInvoker",
+    "PlayerEntityRendererMixin",
+    "PokemonEntityMixin",
+    "WalkAnimationStateAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

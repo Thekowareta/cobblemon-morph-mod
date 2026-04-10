@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.team_aether.morph.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ServerPlayerDimensionsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

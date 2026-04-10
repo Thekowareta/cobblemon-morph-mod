@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "cobblemon-morph-dev",
+	"version": "${version}",
+	"name": "Cobblemon Morph (dev)",
+	"description": "Base tipo fabric-example-mod 1.21.1 + Kotlin + Cobblemon. Área para portar el morph.",
+	"authors": ["Team Aether"],
+	"contact": {
+		"homepage": "https://github.com/FabricMC/fabric-example-mod",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.team_aether.morph.MorphDevMod",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "com.team_aether.morph.client.MorphDevModClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"cobblemon-morph-dev.mixins.json",
+		"cobblemon-morph-dev.client.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.6",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*",
+		"cobblemon": "*"
+	}
+}
